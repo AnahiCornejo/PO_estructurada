@@ -1,0 +1,22 @@
+digraph DiagramaPS_1_5 {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    inicio      [shape=oval, label="INICIO"];
+    leerDatos   [shape=parallelogram, label="Leer MD, TASA"];
+    condDatos   [shape=diamond, label="MD > 0\ny TASA > 0"];
+    calcMonto   [shape=rectangle, label="MONTO = MD * (1 + TASA)"];
+    msgInval    [shape=rectangle, label="Datos inválidos"];
+    mostrarMonto[shape=egg, label="Mostrar MONTO"];
+    fin         [shape=oval, label="FIN"];
+
+    // Flujo
+    inicio -> leerDatos -> condDatos;
+
+    condDatos -> calcMonto   [label="Sí"];
+    condDatos -> msgInval    [label="No"];
+
+    calcMonto -> mostrarMonto -> fin;
+    msgInval  -> fin;
+}

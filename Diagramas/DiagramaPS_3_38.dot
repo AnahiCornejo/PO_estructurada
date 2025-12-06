@@ -1,0 +1,58 @@
+digraph PS_3_38 {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    // --- Inicio y precios ---
+    inicio      [shape=oval,          label="INICIO"];
+    leerPrecios [shape=parallelogram, label="Leer P1, P2, P3,\nP4, P5, P6, P7"];
+    initTotDia  [shape=rectangle,     label="TOTAL_DIA ← 0\nFACT ← 1"];
+
+    leerK       [shape=parallelogram, label="Leer K"];
+    condK       [shape=diamond,       label="K = -1 ?"];
+
+    // --- Por cada factura (cliente) ---
+    initFact    [shape=rectangle,     label="TOTAL_FACT ← 0\nI ← 1"];
+
+    condI       [shape=diamond,       label="I ≤ K ?"];
+    leerLinea   [shape=parallelogram, label="Leer CLAVE, CANT"];
+    selPrecio   [shape=rectangle,
+                 label="SEGÚN CLAVE:\n1 → PRECIO ← P1\n2 → PRECIO ← P2\n3 → PRECIO ← P3\n4 → PRECIO ← P4\n5 → PRECIO ← P5\n6 → PRECIO ← P6\n7 → PRECIO ← P7"];
+
+    calcSub     [shape=rectangle,
+                 label="SUBTOT ← PRECIO * CANT\nTOTAL_FACT ← TOTAL_FACT + SUBTOT"];
+
+    incI        [shape=rectangle,     label="I ← I + 1"];
+
+    imprFactura [shape=parallelogram,
+                 label="Imprimir factura\nnúmero FACT\n(TOTAL_FACT)"];
+
+    acumDia     [shape=rectangle,
+                 label="TOTAL_DIA ← TOTAL_DIA + TOTAL_FACT\nFACT ← FACT + 1"];
+
+    // --- Fin del día ---
+    imprTotal   [shape=egg,
+                 label="Imprimir TOTAL_DIA"];
+    fin         [shape=oval,          label="FIN"];
+
+    // --- Flujo principal ---
+    inicio -> leerPrecios -> initTotDia -> leerK -> condK;
+
+    // ¿Hay más clientes?
+    condK -> initFact [label="No (-1)?\nNo"];
+    condK -> imprTotal [label="Sí (-1)"];
+
+    // Bucle interno por cada cliente (K platillos)
+    initFact -> condI;
+
+    condI -> leerLinea [label="Sí"];
+    condI -> imprFactura [label="No"];
+
+    leerLinea -> selPrecio -> calcSub -> incI -> condI;
+
+    // Después de terminar los K platillos
+    imprFactura -> acumDia -> leerK;
+
+    // Final del día
+    imprTotal -> fin;
+}

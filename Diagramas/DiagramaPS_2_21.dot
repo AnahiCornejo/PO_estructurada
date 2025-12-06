@@ -1,0 +1,52 @@
+digraph PS_2_21 {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    inicio   [shape=oval,          label="INICIO"];
+    leer     [shape=parallelogram, label="Leer CATE, MONTO"];
+
+    c1       [shape=diamond,       label="CATE = 1?"];
+    c2       [shape=diamond,       label="CATE = 2?"];
+    c3       [shape=diamond,       label="CATE = 3?"];
+    c4       [shape=diamond,       label="CATE = 4?"];
+
+    d1       [shape=rectangle,     label="PORC ← 0.35"];
+    d2       [shape=rectangle,     label="PORC ← 0.22"];
+    d3       [shape=rectangle,     label="PORC ← 0.15"];
+    d4       [shape=rectangle,     label="PORC ← 0.05"];
+    d0       [shape=rectangle,     label="PORC ← 0"];
+
+    joinCalc [shape=point, width=0.02, label=""];
+
+    calc     [shape=rectangle,
+              label="DESC ← MONTO * PORC\nPAGO ← MONTO - DESC"];
+    mostrar  [shape=egg,
+              label="Mostrar DESC, PAGO"];
+    fin      [shape=oval,          label="FIN"];
+
+    // Flujo principal
+    inicio -> leer -> c1;
+
+    // Cadena de decisiones por categoría
+    c1 -> d1  [label="Sí"];
+    c1 -> c2  [label="No"];
+
+    c2 -> d2  [label="Sí"];
+    c2 -> c3  [label="No"];
+
+    c3 -> d3  [label="Sí"];
+    c3 -> c4  [label="No"];
+
+    c4 -> d4  [label="Sí"];
+    c4 -> d0  [label="No (>\n4)"];
+
+    // Convergencia hacia el cálculo
+    d1 -> joinCalc;
+    d2 -> joinCalc;
+    d3 -> joinCalc;
+    d4 -> joinCalc;
+    d0 -> joinCalc;
+
+    joinCalc -> calc -> mostrar -> fin;
+}

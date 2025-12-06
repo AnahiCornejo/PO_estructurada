@@ -1,0 +1,40 @@
+digraph VectorEntrada {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    // Nodos principales
+    inicio      [shape=oval,          label="INICIO"];
+    msgNumElem  [shape=rectangle,     label="\"Ingrese número\nde elementos\""];
+    leerN       [shape=parallelogram, label="N"];
+    condN       [shape=diamond,       label="N ≥ 1\ny N ≤ 50"];
+
+    // Rama válida
+    initI       [shape=rectangle,     label="I ← 1"];
+    condI       [shape=diamond,       label="I ≤ N"];
+    msgDato     [shape=rectangle,     label="\"Ingrese el dato\""];
+    leerVect    [shape=parallelogram, label="VECTOR[I]"];
+    incI        [shape=rectangle,     label="I ← I + 1"];
+    conA        [shape=hexagon,       label="A"];
+
+    // Rama error
+    msgError    [shape=egg,     label="\"Error en los datos\""];
+    conB        [shape=hexagon,       label="B"];
+
+    // Flujo principal
+    inicio -> msgNumElem -> leerN -> condN;
+
+    // Decisión N válido
+    condN -> initI   [label="Sí"];
+    condN -> msgError [label="No"];
+
+    // Bucle de lectura del vector
+    initI -> condI;
+    condI -> msgDato  [label="Sí"];
+    condI -> conA     [label="No"];
+
+    msgDato -> leerVect -> incI -> condI;
+
+    // Rama de error
+    msgError -> conB;
+}

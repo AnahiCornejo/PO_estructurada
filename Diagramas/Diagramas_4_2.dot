@@ -1,0 +1,58 @@
+digraph ConteoMayoresPromedio {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    inicio [shape=oval, label="INICIO"];
+    cont0  [shape=rectangle, label="CONT ← 0"];
+    lectura [shape=parallelogram, label="S1, S2, S3, S4, ..., S70"];
+    acum [shape=rectangle, label="AC ← S1 + S2 + S3 + S4 + ... + S70"];
+    prom [shape=rectangle, label="PROM ← AC / 70"];
+
+    // Decisiones repetitivas
+    d1 [shape=diamond, label="S1 > PROM"];
+    inc1 [shape=rectangle, label="CONT ← CONT + 1"];
+
+    d2 [shape=diamond, label="S2 > PROM"];
+    inc2 [shape=rectangle, label="CONT ← CONT + 1"];
+
+    d3 [shape=diamond, label="S3 > PROM"];
+    inc3 [shape=rectangle, label="CONT ← CONT + 1"];
+
+    // Nota para el usuario
+
+    d70 [shape=diamond, label="S70 > PROM"];
+    inc70 [shape=rectangle, label="CONT ← CONT + 1"];
+
+    salida [shape=egg, label="CONT"];
+    fin [shape=oval, label="FIN"];
+
+    // Flujo principal
+    inicio -> cont0 -> lectura -> acum -> prom;
+
+    // Secuencia repetitiva
+    prom -> d1;
+    d1 -> inc1 [label="Sí"];
+    d1 -> d2 [label="No"];
+
+    inc1 -> d2;
+
+    d2 -> inc2 [label="Sí"];
+    d2 -> d3 [label="No"];
+
+    inc2 -> d3;
+
+    d3 -> inc3 [label="Sí"];
+    d3 -> nota [label="No"];
+
+    inc3 -> nota;
+
+    nota -> d70;
+
+    d70 -> inc70 [label="Sí"];
+    d70 -> salida [label="No"];
+
+    inc70 -> salida;
+
+    salida -> fin;
+}

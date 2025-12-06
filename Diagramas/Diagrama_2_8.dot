@@ -1,0 +1,63 @@
+digraph Compras {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    inicio   [shape=oval, label="INICIO"];
+    num      [shape=parallelogram, label="NUM"];
+    
+    // Primer nivel
+    d500     [shape=diamond, label="COMPRA <= 500"];
+    p500     [shape=rectangle, label="PAGAR = COMPRA"];
+
+    // Segundo nivel
+    d1000    [shape=diamond, label="COMPRA <= 1000"];
+    p1000    [shape=rectangle, label="PAGAR = COMPRA - (COMPRA * 0.05)"];
+
+    // Tercer nivel
+    d7000    [shape=diamond, label="COMPRA <= 7000"];
+    p7000    [shape=rectangle, label="PAGAR = COMPRA - (COMPRA * 0.05)"];
+
+    // Cuarto nivel
+    d15000   [shape=diamond, label="COMPRA <= 15000"];
+    p15000a  [shape=rectangle, label="PAGAR = COMPRA - (COMPRA * 0.18)"];
+    p15000b  [shape=rectangle, label="PAGAR = COMPRA - (COMPRA * 0.25)"];
+
+    finalPago [shape=egg, label="PAGAR"];
+    fin       [shape=oval, label="FIN"];
+
+    // Flujo principal
+    inicio -> num -> d500;
+
+    // Rama COMPRA <= 500
+    d500 -> p500 [label="Sí"];
+    p500 -> finalPago;
+
+    // Rama COMPRA > 500
+    d500 -> d1000 [label="No"];
+
+    // Rama COMPRA <= 1000
+    d1000 -> p1000 [label="Sí"];
+    p1000 -> finalPago;
+
+    // Rama COMPRA > 1000
+    d1000 -> d7000 [label="No"];
+
+    // Rama COMPRA <= 7000
+    d7000 -> p7000 [label="Sí"];
+    p7000 -> finalPago;
+
+    // Rama COMPRA > 7000
+    d7000 -> d15000 [label="No"];
+
+    // Rama COMPRA <= 15000
+    d15000 -> p15000a [label="Sí"];
+    p15000a -> finalPago;
+
+    // Rama COMPRA > 15000
+    d15000 -> p15000b [label="No"];
+    p15000b -> finalPago;
+
+    // Fin
+    finalPago -> fin;
+}

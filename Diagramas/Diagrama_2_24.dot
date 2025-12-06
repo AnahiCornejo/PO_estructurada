@@ -1,0 +1,25 @@
+digraph Diagrama219 {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=12];
+
+    // Nodos
+    inicio   [shape=oval, label="INICIO"];
+    entrada  [shape=parallelogram, label="MAT, CAL1, CAL2\nCAL3, CAL4, CAL5"];
+    promedio [shape=rectangle, label="PRO = (CAL1 + CAL2 + CAL3 + CAL4 + CAL5)/5"];
+    decision [shape=diamond, label="PRO >= 6"];
+    aprobado [shape=egg, label="MAT, PRO,\n\"APROBADO\""];
+    noaprob  [shape=egg, label="MAT, PRO,\n\"NO APROBADO\""];
+    fin      [shape=oval, label="FIN"];
+
+    // Flujo principal
+    inicio -> entrada -> promedio -> decision;
+
+    // Ramas de decisión
+    decision -> aprobado [label="Sí"];
+    decision -> noaprob  [label="No"];
+
+    // Hacia FIN
+    aprobado -> fin;
+    noaprob  -> fin;
+}

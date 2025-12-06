@@ -1,0 +1,67 @@
+digraph PS_4_10 {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    // --- Nodos generales ---
+    inicio      [shape=oval,          label="INICIO"];
+    leerNArre   [shape=parallelogram, label="Leer N y ARRE[1..N]\n(ordenado)"];
+    leerOPC     [shape=parallelogram, label="Leer OPC\n1=Insertar, 2=Eliminar"];
+    condOPC1    [shape=diamond,       label="OPC = 1?"];
+    condOPC2    [shape=diamond,       label="OPC = 2?"];
+    msgError    [shape=rectangle,     label="Opción inválida"];
+
+    mostrarArr  [shape=egg, label="Mostrar ARRE[1..N]"];
+    fin         [shape=oval,          label="FIN"];
+
+    // ---------- INSERCIÓN ----------
+    leerX_ins   [shape=parallelogram, label="Leer X (a insertar)"];
+    setI_ins    [shape=rectangle,     label="I ← N"];
+    condIns     [shape=diamond,       label="I > 0\ny ARRE[I] > X?"];
+    shiftIns    [shape=rectangle,     label="ARRE[I+1] ← ARRE[I]\nI ← I - 1"];
+    colocaX     [shape=rectangle,     label="ARRE[I+1] ← X\nN ← N + 1"];
+
+    // ---------- ELIMINACIÓN ----------
+    leerX_del   [shape=parallelogram, label="Leer X (a eliminar)"];
+    setI_del    [shape=rectangle,     label="I ← 1"];
+    condDentro  [shape=diamond,       label="I ≤ N?"];
+    condEsX     [shape=diamond,       label="ARRE[I] = X?"];
+    incI_del    [shape=rectangle,     label="I ← I + 1"];
+
+    noExiste    [shape=rectangle,     label="X no está\nen el arreglo"];
+
+    shiftDel    [shape=rectangle,
+                 label="Para J = I hasta N-1:\n  ARRE[J] ← ARRE[J+1]"];
+    finDel      [shape=rectangle,     label="N ← N - 1"];
+
+    // ===== FLUJO GENERAL =====
+    inicio -> leerNArre -> leerOPC -> condOPC1;
+
+    // ---- Rama Inserción ----
+    condOPC1 -> leerX_ins [label="Sí"];
+    condOPC1 -> condOPC2  [label="No"];
+
+    leerX_ins -> setI_ins -> condIns;
+    condIns   -> shiftIns [label="Sí"];
+    shiftIns  -> condIns;
+    condIns   -> colocaX  [label="No"];
+
+    colocaX -> mostrarArr -> fin;
+
+    // ---- Rama Eliminación ----
+    condOPC2 -> leerX_del [label="Sí"];
+    condOPC2 -> msgError  [label="No"];
+    msgError  -> fin;
+
+    leerX_del -> setI_del -> condDentro;
+
+    condDentro -> condEsX   [label="Sí"];
+    condDentro -> noExiste  [label="No"];
+    noExiste   -> fin;
+
+    condEsX -> shiftDel   [label="Sí"];
+    condEsX -> incI_del   [label="No"];
+    incI_del -> condDentro;
+
+    shiftDel -> finDel -> mostrarArr -> fin;
+}

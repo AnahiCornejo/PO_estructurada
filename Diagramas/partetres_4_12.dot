@@ -1,0 +1,34 @@
+digraph ColaCB {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    // Parte C
+    C        [shape=hexagon, label="C"];
+    msgOrd   [shape=rectangle, label="\"Arreglo ordenado\""];
+    iSet     [shape=rectangle, label="I ← 1"];
+    condI    [shape=diamond,   label="I ≤ N"];
+    printV   [shape=egg, label="VECTOR[I]"];
+    incI     [shape=rectangle, label="I ← I + 1"];
+
+    // Conector B (rama de error que viene de antes)
+    B        [shape=hexagon, label="B"];
+
+    // Unión de salidas hacia FIN
+    joinFin  [shape=point, width=0.02, label=""];
+    fin      [shape=oval, label="FIN"];
+
+    // Flujo parte C
+    C -> msgOrd -> iSet -> condI;
+
+    condI -> printV [label="Sí"];
+    condI -> joinFin [label="No"];
+
+    printV -> incI -> condI;
+
+    // Rama B directo a FIN
+    B -> joinFin;
+
+    // Salida común
+    joinFin -> fin;
+}

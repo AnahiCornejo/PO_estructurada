@@ -1,0 +1,38 @@
+digraph ParteA {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    A        [shape=hexagon,  label="A"];
+    i1       [shape=rectangle, label="I <- 1"];
+    condI    [shape=diamond,   label="I <= N - 1"];
+    menorSet [shape=rectangle, label="MENOR <- VECTOR[I]\nK <- I"];
+    jSet     [shape=rectangle, label="J <- I + 1"];
+    condJ    [shape=diamond,   label="J <= N"];
+    condCmp  [shape=diamond,   label="VECTOR[J] < MENOR"];
+    newMenor [shape=rectangle, label="MENOR <- VECTOR[J]\nK <- J"];
+    incJ     [shape=rectangle, label="J <- J + 1"];
+
+    swap     [shape=rectangle, label="VECTOR[K] <- VECTOR[I]\nVECTOR[I] <- MENOR"];
+    incI     [shape=rectangle, label="I <- I + 1"];
+    C        [shape=hexagon,   label="C"];
+
+    // Flujo
+    A -> i1 -> condI;
+
+    condI -> menorSet [label="Si"];
+    condI -> C        [label="No"];
+
+    menorSet -> jSet -> condJ;
+
+    condJ -> condCmp [label="Si"];
+    condJ -> swap    [label="No"];
+
+    condCmp  -> newMenor [label="Si"];
+    condCmp  -> incJ     [label="No"];
+
+    newMenor -> incJ;
+    incJ     -> condJ;
+
+    swap -> incI -> condI;
+}

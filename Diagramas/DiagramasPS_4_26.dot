@@ -1,0 +1,27 @@
+digraph PS_4_26_simple {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    inicio   [shape=oval,          label="INICIO"];
+    leerDatos[shape=parallelogram, label="Leer N y A[1..N,1..N]"];
+    setI     [shape=rectangle,     label="I ← 1"];
+    condI    [shape=diamond,       label="I ≤ N"];
+
+    calcB    [shape=rectangle,     label="Calcular B[I] según reglas:\n\nSi I mod 4 = 1  →  B[I] = Π A[I,j]\nSi I mod 4 = 2  →  B[I] = Σ A[I,j]\nSi I mod 4 = 3  →  B[I] = B[I-2] * B[I-1]\nSi I mod 4 = 0  →  B[I] = B[I-2] / N"];
+
+    incI     [shape=rectangle,     label="I ← I + 1"];
+
+    imprimir [shape=egg, label="Imprimir B[1..N]"];
+    fin      [shape=oval,          label="FIN"];
+
+    // Flujo principal
+    inicio -> leerDatos -> setI -> condI;
+
+    condI -> calcB   [label="Sí"];
+    condI -> imprimir [label="No"];
+
+    calcB -> incI -> condI;
+
+    imprimir -> fin;
+}

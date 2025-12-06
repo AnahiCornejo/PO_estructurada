@@ -1,0 +1,13 @@
+digraph Flujo {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=12];
+
+    inicio  [shape=oval,          label="INICIO"];
+    entrada [shape=parallelogram, label="A, B"];
+    proceso [shape=rectangle,     label="RES = (A + B) ** 2 / 3"];
+    salida  [shape=egg,           label="RES"];
+    fin     [shape=oval,          label="FIN"];
+
+    inicio -> entrada -> proceso -> salida -> fin;
+}

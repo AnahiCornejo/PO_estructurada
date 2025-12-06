@@ -1,0 +1,56 @@
+digraph Promedios {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    // ---- INICIO E INICIALIZACIÓN ----
+    inicio    [shape=oval,          label="INICIO"];
+    initsum   [shape=rectangle,     label="SUMOTR ← 0\nSUMPOS ← 0, CUEPOS ← 0"];
+    leerM     [shape=parallelogram, label="M"];
+    initI     [shape=rectangle,     label="I ← 1"];
+
+    // ---- BLOQUE REPETITIVO ----
+    subgraph cluster_repetir {
+        label="Estructura Repetitiva\nRepetir";
+        style="rounded,dashed";
+        color="gray";
+
+        condI     [shape=diamond,       label="I ≤ M"];
+        leerNum   [shape=parallelogram, label="NUM"];
+        condNum   [shape=diamond,       label="NUM > 0"];
+
+        casoPos   [shape=rectangle,     label="SUMPOS ← SUMPOS + NUM\nCUEPOS ← CUEPOS + 1"];
+        casoNeg   [shape=rectangle,     label="SUMOTR ← SUMOTR + NUM"];
+
+        incI      [shape=rectangle,     label="I ← I + 1"];
+    }
+
+    // ---- CÁLCULOS FINALES Y SALIDA ----
+    calcPro   [shape=rectangle,     label="PROGEN ← (SUMPOS + SUMOTR)/M\nPROPOS ← (SUMPOS/CUEPOS)"];
+    salida    [shape=egg, label="CUEPOS, PROPOS,\nPROGEN"];
+    fin       [shape=oval,          label="FIN"];
+
+    // ---- FLUJO PRINCIPAL ----
+    inicio  -> initsum -> leerM -> initI -> condI;
+
+    // Ciclo: I ≤ M ?
+    condI   -> leerNum [label="Sí"];
+    condI   -> calcPro [label="No"];
+
+    // Lectura y prueba de NUM
+    leerNum -> condNum;
+
+    // NUM > 0 ?
+    condNum -> casoPos [label="Sí"];
+    condNum -> casoNeg [label="No"];
+
+    // Actualización según el caso
+    casoPos -> incI;
+    casoNeg -> incI;
+
+    // Regreso al inicio del ciclo
+    incI    -> condI;
+
+    // Parte final
+    calcPro -> salida -> fin;
+}

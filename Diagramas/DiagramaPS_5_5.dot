@@ -1,0 +1,59 @@
+digraph PS_5_5_a {
+    rankdir=TB;
+    bgcolor="white";
+    node [fontname="Arial", fontsize=11];
+
+    inicio      [shape=oval,          label="INICIO"];
+
+    leerArreglos[shape=parallelogram, label="(Supuesto)\nHAB[ ], HUES[ ]\nya cargados"];
+    leerDatos   [shape=parallelogram, label="Leer NOM,\nFECHAHOY"];
+
+    // Búsqueda del huésped
+    iInit       [shape=rectangle,     label="I ← 1"];
+    condI       [shape=diamond,       label="I ≤ NHUES"];
+    compNom     [shape=diamond,       label="HUES[I].NOM = NOM"];
+    incI        [shape=rectangle,     label="I ← I + 1"];
+
+    noHuesped   [shape=rectangle,     label="Huésped no\nregistrado"];
+    numHabSet   [shape=rectangle,     label="NUMHAB ← HUES[I].NUMHAB\nFECARR ← HUES[I].FECARR"];
+
+    // Búsqueda de la habitación
+    jInit       [shape=rectangle,     label="J ← 1"];
+    condJ       [shape=diamond,       label="J ≤ NHAB"];
+    compHab     [shape=diamond,       label="HAB[J].NUM = NUMHAB"];
+    incJ        [shape=rectangle,     label="J ← J + 1"];
+
+    tomaPrecio  [shape=rectangle,     label="PRECIO ← HAB[J].PRECIO"];
+
+    // Cálculo del pago
+    calcDias    [shape=rectangle,     label="DIAS ← FECHAHOY - FECARR"];
+    calcPago    [shape=rectangle,     label="PAGO ← DIAS * PRECIO"];
+
+    mostrarPago [shape=egg, label="Mostrar PAGO"];
+    fin         [shape=oval,          label="FIN"];
+
+    // ===== FLUJO =====
+    inicio -> leerArreglos -> leerDatos -> iInit -> condI;
+
+    // Búsqueda en HUES
+    condI   -> compNom [label="Sí"];
+    condI   -> noHuesped [label="No"];
+    noHuesped -> fin;
+
+    compNom -> numHabSet [label="Sí"];
+    compNom -> incI      [label="No"];
+    incI    -> condI;
+
+    // Búsqueda en HAB
+    numHabSet -> jInit -> condJ;
+
+    condJ   -> compHab [label="Sí"];
+    condJ   -> fin     [label="No"]; // por seguridad
+
+    compHab -> tomaPrecio [label="Sí"];
+    compHab -> incJ       [label="No"];
+    incJ    -> condJ;
+
+    // Cálculo final
+    tomaPrecio -> calcDias -> calcPago -> mostrarPago -> fin;
+}
