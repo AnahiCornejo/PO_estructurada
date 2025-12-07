@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicios de Programación Estructurada - PS_2_21</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<script>
+function openModal() {
+  document.getElementById("diagramModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("diagramModal").style.display = "none";
+}
+
+// Cerrar si hace clic fuera de la imagen
+window.onclick = function(event) {
+  const modal = document.getElementById("diagramModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<body>
+  <div class="container">
+    <header class="page-header">
+      <h1>Ejercicios de Programación Estructurada en Java</h1>
+      <p class="subtitle">Aprende desde lo básico hasta sistemas completos</p>
+    </header>
+
+    <main class="exercises-main">
+      <article class="exercise-card" aria-labelledby="exercise-title">
+        <header class="exercise-header">
+          <span class="exercise-badge">Condicionales</span>
+          <h2 id="exercise-title">PS_2_21: Descuento por Categoría de Cliente</h2>
+          
+          <p class="exercise-description">
+            Los clientes de un hospital tienen una credencial en la que se registra una categoría
+            que depende de los ingresos económicos del núcleo familiar. De acuerdo con esta
+            categoría, el hospital aplica un porcentaje de descuento al monto que el paciente debe
+            pagar por su cuenta. Este programa calcula el descuento y el total a pagar usando la
+            categoría del cliente y la tabla de descuentos establecida.
+          </p>
+        </header>
+
+        <button class="diagram-button" onclick="openModal()">
+          📊 Ver Diagrama de Flujo
+        </button>
+
+        <!-- 🟣 Modal del Diagrama -->
+        <div id="diagramModal" class="modal">
+          <span class="close" onclick="closeModal()">&times;</span>
+
+          <div class="modal-content">
+            <!-- Cambia la ruta si guardas el diagrama en otra carpeta o con otro nombre -->
+            <img id="diagramImage" src="../Diagramas/DiagramaPS_2_21.png" alt="Diagrama de Flujo PS_2_21">
+          </div>
+        </div>
+
+        <div class="exercise-content">
+          <section class="exercise-main">
+            <h3>Requisitos</h3>
+            <ul>
+              <li>Leer la categoría del cliente <code>CATE</code> (entero).</li>
+              <li>Leer el monto de la cuenta del cliente <code>MONTO</code> (real).</li>
+              <li>Aplicar el descuento según la categoría:
+                <ul>
+                  <li>Categoría 1 → 35&nbsp;% de descuento.</li>
+                  <li>Categoría 2 → 22&nbsp;% de descuento.</li>
+                  <li>Categoría 3 → 15&nbsp;% de descuento.</li>
+                  <li>Categoría 4 → 5&nbsp;% de descuento.</li>
+                  <li>Categoría &gt; 4 → Sin descuento.</li>
+                </ul>
+              </li>
+              <li>Calcular el importe del descuento: <code>DESC = MONTO * PORC / 100</code>.</li>
+              <li>Calcular el total a pagar: <code>TOTAL = MONTO - DESC</code>.</li>
+              <li>Mostrar la categoría, el porcentaje aplicado, el descuento y el total a pagar.</li>
+            </ul>
+
+            <h3>Lógica del Programa</h3>
+            <ul>
+              <li><strong>Entrada:</strong> Categoría del cliente (<code>CATE</code>) y monto de la cuenta (<code>MONTO</code>).</li>
+              <li><strong>Selección:</strong> Según la categoría, se determina el porcentaje de descuento usando
+                una estructura condicional (<code>if</code>, <code>else if</code> o <code>switch</code>).</li>
+              <li><strong>Cálculo:</strong>
+                <ul>
+                  <li>Si la categoría es 1, 2, 3 o 4, se aplica el porcentaje correspondiente.</li>
+                  <li>Si la categoría es mayor que 4, el porcentaje es 0&nbsp;% (no hay descuento).</li>
+                </ul>
+              </li>
+              <li><strong>Salida:</strong> Se muestra cuánto se descuenta y cuánto debe pagar finalmente el cliente.</li>
+            </ul>
+
+            <h3>Ejemplo de Ejecución</h3>
+            <pre><code class="code-block">Ingrese la categoría del cliente (CATE): 2
+Ingrese el monto de la cuenta (MONTO): 1000
+
+Categoría del cliente: 2
+Porcentaje de descuento: 22.0%
+Importe de descuento: 220.0
+Total a pagar: 780.0</code></pre>
+
+            <h3>Detalles Técnicos</h3>
+            <ul>
+              <li><code>CATE</code> es una variable entera que representa la categoría del cliente.</li>
+              <li><code>MONTO</code>, <code>DESC</code> y <code>TOTAL</code> son variables de tipo real (por ejemplo, <code>double</code> en Java).</li>
+              <li>El porcentaje de descuento se maneja como valor numérico (35, 22, 15, 5 o 0).</li>
+              <li>Se recomienda usar una estructura <code>switch</code> o una cadena de <code>if - else if</code> para seleccionar el porcentaje.</li>
+              <li>Si se ingresa una categoría no contemplada (mayor que 4), el programa debe considerar 0&nbsp;% de descuento.</li>
+            </ul>
+          </section>
+
+          <aside class="exercise-sidebar">
+            <h3>Notas rápidas</h3>
+            <p class="note-text">En este problema practicas:</p>
+            <ul>
+              <li>Uso de estructuras condicionales.</li>
+              <li>Manejo de porcentajes y descuentos.</li>
+              <li>Validación de rangos de valores.</li>
+              <li>Entrada y salida de datos numéricos.</li>
+            </ul>
+
+            <div class="tip-box">
+              <strong>Tip:</strong> Puedes guardar el porcentaje de descuento en una variable
+              separada. Así, si la tabla cambia en el futuro, solo modificas los valores en las
+              condiciones y el resto del programa sigue igual.
+            </div>
+          </aside>
+        </div>
+      </article>
+    </main>
+
+    <footer class="page-footer">
+      <p><a href="index.html">← Volver al índice</a></p>
+    </footer>
+  </div>
+</body>
+</html>
