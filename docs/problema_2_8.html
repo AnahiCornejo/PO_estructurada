@@ -6,6 +6,23 @@
   <title>Ejercicios de Programación Estructurada - Problema_2_8</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+<script>
+function openModal() {
+  document.getElementById("diagramModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("diagramModal").style.display = "none";
+}
+
+// Cerrar si hace clic fuera de la imagen
+window.onclick = function(event) {
+  const modal = document.getElementById("diagramModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 <body>
   <div class="container">
     <header class="page-header">
@@ -25,7 +42,18 @@
             rango de monto. Es un ejemplo práctico de decisiones escalonadas.
           </p>
         </header>
-        
+        </header>
+           <button class="diagram-button" onclick="openModal()">
+  📊 Ver Diagrama de Flujo
+</button>
+<!-- 🟣 Modal del Diagrama -->
+<div id="diagramModal" class="modal">
+  <span class="close" onclick="closeModal()">&times;</span>
+
+  <div class="modal-content">
+      <img id="diagramImage" src="../Diagramas/Diagrama_2_8.png" alt="Diagrama de Flujo">
+  </div>
+</div>
         <div class="exercise-content">
           <section class="exercise-main">
             <h3>Requisitos</h3>
