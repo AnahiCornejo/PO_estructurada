@@ -234,11 +234,17 @@ h3 {
 /* ==========================================
    Exercise Content Grid
    ========================================== */
-.exercise-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-lg);
+.modal-content img {
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  object-fit: contain;
 }
+.modal-content {
+  max-height: 90vh;
+  overflow: auto;
+}
+
 
 @media (min-width: 900px) {
   .exercise-content {
